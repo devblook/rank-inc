@@ -56,43 +56,63 @@ public class RankupCommand implements CommandClass {
 
         for (String playerRank : playerRankList){
 
-            if (ranksFile.getString("next-rank").equalsIgnoreCase(playerRank)){
+            if (ranksFile.getString("last-rank").equalsIgnoreCase(playerRank)){
                 sender.sendMessage(messagesFile.getString("error.max-rank")
                         .replace("%rank%" , playerRank));
+
+                if (senderUser.isConfirmMode()) {
+                    senderUser.setConfirmMode(false);
+                }
+
                 return;
             }
 
-            if (ranksFile.getConfigurationSection(playerRank) != null){
+            if (ranksFile.getConfigurationSection(playerRank) != null ||
+                    ranksFile.getConfigurationSection(playerRank.toUpperCase()) != null   ){
+
                 rankExists = true;
-                playerRankName = playerRank;
+                playerRankName = playerRank.toLowerCase();
+
             }
         }
 
         if (!rankExists){
             sender.sendMessage(messagesFile.getString("error.no-rankup"));
+
+            if (senderUser.isConfirmMode()) {
+                senderUser.setConfirmMode(false);
+            }
+
             return;
         }
 
-        String nextRank = ranksFile.getString(playerRankName + ".next-rank");
+        String nextRank = "";
+
+        if (ranksFile.getString(playerRankName.toUpperCase() + ".next-rank") != null){
+            nextRank = ranksFile.getString(playerRankName.toUpperCase() + ".next-rank");
+        }else if (ranksFile.getString(playerRankName.toLowerCase() + ".next-rank") != null){
+            nextRank = ranksFile.getString(playerRankName.toLowerCase() + ".next-rank");
+
+        }
 
         if (!configFile.getBoolean("settings.add-rank-on-rankup")) {
             vaultManager.getPermission().playerRemoveGroup(sender, playerRankName);
         }
 
         vaultManager.getPermission().playerAddGroup(sender, nextRank);
-        sender.sendMessage(configFile.getString("plugin.rankup-message")
+        sender.sendMessage(messagesFile.getString("plugin.rankup-message")
                 .replace("%old-rank%", playerRankName)
-                .replace("%new-rank%", nextRank));
+                .replace("%next-rank%", nextRank).toLowerCase());
 
 
         globalAction
                 .forEach(action -> action.start(sender));
-        ranksAction.get(playerRankName)
+        ranksAction.get(playerRankName.toLowerCase())
                 .forEach(action -> action.start(sender));
 
         if (senderUser.isConfirmMode()) {
             senderUser.setConfirmMode(false);
-        };
+        }
 
     }
 
