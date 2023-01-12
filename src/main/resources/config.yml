@@ -15,5 +15,4 @@ settings:
 
   # Note: Use %a to use the ":" %symbol%
   global-actions:
-    - "command: broadcast &fThe player &a%player% &franked to &a%next-rank%&f."
-    -
+    - "console_command: broadcast &fThe player &a%player% &franked to &a%next-rank%&f."
