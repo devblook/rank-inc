@@ -6,12 +6,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 import team.unnamed.inject.Injector;
 
 import javax.inject.Inject;
-import java.util.List;
+import java.util.Set;
 
 public class RankInc extends JavaPlugin {
 
     @Inject
-    private List<Service> services;
+    private Set<Service> services;
 
     @Override
     public void onEnable() {
