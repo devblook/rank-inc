@@ -3,12 +3,12 @@ last-rank: C
 A:
 
   next-rank: B
-  money-requeriment: 5000
+  money-requirement: 5000
   actions:
     - ""
 
 B:
   next-rank: C
-  money-requeriment: 6000
+  money-requirement: 6000
   actions:
     - ""

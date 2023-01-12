@@ -7,6 +7,7 @@ import me.bryang.rankinc.user.User;
 import me.fixeddev.commandflow.annotated.CommandClass;
 import me.fixeddev.commandflow.annotated.annotation.Command;
 import me.fixeddev.commandflow.bukkit.annotation.Sender;
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.entity.Player;
 import team.unnamed.inject.InjectAll;
 
@@ -67,12 +68,15 @@ public class RankupCommand implements CommandClass {
                 return;
             }
 
-            if (ranksFile.getConfigurationSection(playerRank) != null ||
-                    ranksFile.getConfigurationSection(playerRank.toUpperCase()) != null   ){
-
+            if (ranksFile.getConfigurationSection(playerRank) != null){
                 rankExists = true;
                 playerRankName = playerRank.toLowerCase();
 
+            }
+
+            if (ranksFile.getConfigurationSection(playerRank.toUpperCase()) != null ){
+                rankExists = true;
+                playerRankName = playerRank.toUpperCase();
             }
         }
 
@@ -86,14 +90,18 @@ public class RankupCommand implements CommandClass {
             return;
         }
 
-        String nextRank = "";
+        int moneyRequirement = ranksFile.getInt(playerRankName + ".money-requirement");
 
-        if (ranksFile.getString(playerRankName.toUpperCase() + ".next-rank") != null){
-            nextRank = ranksFile.getString(playerRankName.toUpperCase() + ".next-rank");
-        }else if (ranksFile.getString(playerRankName.toLowerCase() + ".next-rank") != null){
-            nextRank = ranksFile.getString(playerRankName.toLowerCase() + ".next-rank");
+        Economy economy = vaultManager.getEconomy();
 
+        if (economy.has(sender, moneyRequirement)){
+            sender.sendMessage(messagesFile.getString("error.insufficient-money")
+                    .replace("%money%", String.valueOf(economy.getBalance(sender))));
+
+            return;
         }
+
+        String nextRank = ranksFile.getString(playerRankName + ".net-rank");
 
         if (!configFile.getBoolean("settings.add-rank-on-rankup")) {
             vaultManager.getPermission().playerRemoveGroup(sender, playerRankName);

@@ -27,3 +27,6 @@ error:
 
   # When you have the last rank.
   max-rank: "&c[Error] &8| &fYou reached the &cmax rank&f. &fYou have the rank &a%group%&f."
+
+  # When you don't have the required money.
+  insufficient-money: "&c[Error] &8| &fInsufficient money. &fYou need &a$%money%&f."
