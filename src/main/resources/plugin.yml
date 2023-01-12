@@ -1,0 +1,8 @@
+name: RankInc
+version: '${version}'
+main: me.bryang.rankinc.RankInc
+author: BryanG
+api-version: 1.19
+
+depend:
+  - Vault

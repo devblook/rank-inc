@@ -1,0 +1,29 @@
+#
+# Messages.yml
+
+
+plugin:
+
+  # To confirm the rankup.
+  send-confirm: "&a[*] &8| &fPress the command again to confirm the &arankup&f."
+
+  rankup-message: "&a[*] &8| &fYou ranked from &a%old-rank% &fto &a%next-rank%&f."
+
+admin:
+
+  # When you reload the plugin.
+  reload: "&e[!] &fPlugin reloaded."
+
+error:
+
+  # When you use the console in the command.
+  no-console: "&c[Error] &8| &fYou can't do this in console."
+
+  # When you don't have permission to use the command.
+  no-permission: "&c[Error] &8| &fYou don't have permission to do this."
+
+  # When you don´t have the group in the list of rankups.
+  no-rankup: "&c[Error] &8| &fYou don't have a rank in the &crankup list&f."
+
+  # When you have the last rank.
+  max-rank: "&c[Error] &8| &fYou reached the &cmax rank&f. &fYou have the rank &a%group%&f."

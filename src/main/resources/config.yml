@@ -1,0 +1,19 @@
+#
+# Config.yml
+
+settings:
+
+  # Give the user the first rank in ranks.yml
+  give-rank: true
+
+  # Mode when the player have to confirm to rankup.
+  allow-confirm: true
+
+  # If you enable this, when the player rankup will add the rank.
+  # If you disable will remove the old rank and put the new rank.
+  add-rank-on-rankup: true
+
+  # Note: Use %a to use the ":" %symbol%
+  global-actions:
+    - "command: broadcast &fThe player &a%player% &franked to &a%next-rank%&f."
+    -
