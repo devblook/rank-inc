@@ -1,5 +1,6 @@
 package me.bryang.rankinc.manager;
 
+import me.bryang.rankinc.RankInc;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -7,8 +8,10 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 public class VaultManager {
 
     private Permission permission;
+    private final RankInc plugin;
 
-    public VaultManager(){
+    public VaultManager(RankInc plugin){
+        this.plugin = plugin;
         start();
     }
 
@@ -18,7 +21,8 @@ public class VaultManager {
         permission = rsp.getProvider();
 
         if (!permission.hasGroupSupport()){
-            Bukkit.getLogger().info("[!] Error: You need ap erms plugin.");
+            plugin.getLogger().severe("[!] Error: You need a perms plugin.");
+            Bukkit.getPluginManager().disablePlugin(plugin);
         }
     }
 
