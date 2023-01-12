@@ -28,18 +28,28 @@ public class MainModule extends AbstractModule {
 
         bind(RankInc.class).toInstance(plugin);
 
-        bind(new TypeReference<Map<String, User>>(){}).toInstance(new HashMap<>());
-
-        bind(new TypeReference<List<Action>>(){}).toInstance(new ArrayList<>());
-        bind(new TypeReference<Map<ActionType, List<Action>>>(){}).toInstance(new HashMap<>());
-
-        bind(new TypeReference<Map<String, Action>>(){}).named("action-manager").toInstance(new HashMap<>());
-
-        bind(RankupCommand.class).singleton();
-        bind(ServerChangeListener.class).singleton();
-
-        bind(VaultManager.class).toInstance(new VaultManager());
-        install(new ServiceModule());
         install(new FileModule(plugin));
+
+        bind(new TypeReference<Map<String, User>>(){})
+                .toInstance(new HashMap<>());
+
+        bind(new TypeReference<List<Action>>(){})
+                .toInstance(new ArrayList<>());
+        bind(new TypeReference<Map<String, List<Action>>>(){})
+                .toInstance(new HashMap<>());
+
+        bind(new TypeReference<Map<ActionType, Action>>(){})
+                .toInstance(new HashMap<>());
+
+        bind(RankupCommand.class)
+                .singleton();
+        bind(ServerChangeListener.class)
+                .singleton();
+
+        bind(VaultManager.class)
+                .toInstance(new VaultManager(plugin));
+
+        install(new ServiceModule());
+
     }
 }
