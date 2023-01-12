@@ -1,6 +1,7 @@
 package me.bryang.rankinc.services.action;
 
 import me.bryang.rankinc.actions.Action;
+import me.bryang.rankinc.actions.ConsolePerformCommandAction;
 import me.bryang.rankinc.actions.PerformCommandAction;
 import me.bryang.rankinc.actions.SendMessageAction;
 import me.bryang.rankinc.manager.FileManager;
@@ -26,45 +27,49 @@ public class ActionService implements Service {
 
     private Map<ActionType, Action> actionManager;
 
-
-    public ActionService(){
-        actionManager.put(ActionType.MESSAGE, new SendMessageAction());
-        actionManager.put(ActionType.COMMAND, new PerformCommandAction());
-
-    }
     @Override
     public void init() {
 
-        for (String line : configFile.getStringList("settings.global-actions")){
+        actionManager.put(ActionType.MESSAGE, new SendMessageAction());
+        actionManager.put(ActionType.COMMAND, new PerformCommandAction());
+        actionManager.put(ActionType.CONSOLE_COMMAND, new ConsolePerformCommandAction());
 
-            String actionType = line.split(":")[0];
+        configFile.getStringList("settings.global-actions")
+                .forEach(line -> globalAction.add(convertToAction(line)));
 
-            Action action = actionManager.get(actionType.toUpperCase());
-            action.setLine(line.substring(actionType.length()));
-
-            globalAction.add(action);
-        }
-
-        Set<String> ranksKeys = configFile.getKeys(false);
+        Set<String> ranksKeys = ranksFile.getKeys(false);
         ranksKeys.remove("last-rank");
 
-        for (String rankKey : ranksKeys){
+        ranksKeys.forEach(rankKey -> {
 
             List<Action> actionList = new ArrayList<>();
 
-            for (String line : ranksFile.getStringList(rankKey + ".actions")) {
+            ranksFile.getStringList(rankKey + ".actions")
+                    .forEach(line -> {
 
-                String actionType = line.split(":")[0];
+                        if (line.isEmpty()){
+                            return;
+                        }
 
-                Action action = actionManager.get(actionType.toUpperCase());
-                action.setLine(line.substring(actionType.length()));
+                        actionList.add(convertToAction(line));
 
-                actionList.add(action);
-            }
 
-            ranksAction.put(rankKey, actionList);
+                    });
 
-        }
+            ranksAction.put(rankKey.toLowerCase(), actionList);
+
+        });
+
     }
 
+    public Action convertToAction(String line){
+
+        String actionType = line.split(":")[0];
+
+
+        Action action = actionManager.get(ActionType.valueOf(actionType.toUpperCase()));
+        action.setLine(line.substring(actionType.length()));
+
+        return action;
+    }
 }
