@@ -27,5 +27,10 @@ public class FileModule extends AbstractModule {
                 .named("ranks")
                 .toInstance(new FileManager(plugin, "ranks"));
 
+        bind(FileManager.class)
+                .named("players")
+                .toInstance(new FileManager(plugin, "players"));
+
+        plugin.getLogger().info("Files loaded!");
     }
 }

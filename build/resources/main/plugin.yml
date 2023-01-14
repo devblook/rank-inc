@@ -1,0 +1,8 @@
+name: RankInc
+version: 1.0
+main: me.bryang.rankinc.RankInc
+author: BryanG
+api-version: 1.19
+
+depend:
+  - Vault

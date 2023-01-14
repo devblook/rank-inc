@@ -1,6 +1,7 @@
 package me.bryang.rankinc.modules;
 
 import me.bryang.rankinc.services.ListenerService;
+import me.bryang.rankinc.services.PlayersService;
 import me.bryang.rankinc.services.Service;
 import me.bryang.rankinc.services.action.ActionService;
 import me.bryang.rankinc.services.command.CommandService;
@@ -15,6 +16,7 @@ public class ServiceModule extends AbstractModule {
                .asSet()
                .to(CommandService.class)
                .to(ListenerService.class)
-               .to(ActionService.class);
+               .to(ActionService.class)
+               .to(PlayersService.class);
     }
 }

@@ -1,0 +1,14 @@
+last-rank: C
+
+A:
+
+  next-rank: B
+  money-requirement: 5000
+  actions:
+    - ""
+
+B:
+  next-rank: C
+  money-requirement: 6000
+  actions:
+    - ""

@@ -2,6 +2,7 @@ package me.bryang.rankinc.modules;
 
 import me.bryang.rankinc.RankInc;
 import me.bryang.rankinc.actions.Action;
+import me.bryang.rankinc.commands.RanksCommand;
 import me.bryang.rankinc.commands.RankupCommand;
 import me.bryang.rankinc.listeners.ServerChangeListener;
 import me.bryang.rankinc.manager.VaultManager;
@@ -43,6 +44,9 @@ public class MainModule extends AbstractModule {
 
         bind(RankupCommand.class)
                 .singleton();
+        bind(RanksCommand.class)
+                .singleton();
+
         bind(ServerChangeListener.class)
                 .singleton();
 

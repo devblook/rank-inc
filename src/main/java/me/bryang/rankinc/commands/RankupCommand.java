@@ -12,8 +12,7 @@ import org.bukkit.entity.Player;
 import team.unnamed.inject.InjectAll;
 
 import javax.inject.Named;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @InjectAll
 @Command(names = "rankup")
@@ -27,6 +26,10 @@ public class RankupCommand implements CommandClass {
     @Named("ranks")
     private FileManager ranksFile;
 
+    @Named("players")
+    private FileManager playersFile;
+
+
     private Map<String, User> userMap;
 
     private List<Action> globalAction;
@@ -39,6 +42,20 @@ public class RankupCommand implements CommandClass {
 
         User senderUser = userMap.get(sender.getUniqueId().toString());
 
+        List<String> playerRankList = List.of(vaultManager.getPermission().getPlayerGroups(sender));
+
+        if (playerRankList.contains(senderUser.getPlayerRank())){
+            sender.sendMessage(messagesFile.getString("error.no-rankup"));
+            return;
+        }
+
+        if (ranksFile.getString("last-rank").equalsIgnoreCase(senderUser.getPlayerRank())){
+            sender.sendMessage(messagesFile.getString("error.max-rank")
+                    .replace("%rank%" , senderUser.getPlayerRank()));
+
+            return;
+        }
+
         if (configFile.getBoolean("settings.allow-confirm")){
 
             if (!senderUser.isConfirmMode()){
@@ -49,48 +66,9 @@ public class RankupCommand implements CommandClass {
             }
         }
 
-        String[] playerRankList = vaultManager.getPermission().getPlayerGroups(sender);
 
-        boolean rankExists = false;
-
-        String playerRankName = "";
-
-        for (String playerRank : playerRankList){
-
-            if (ranksFile.getString("last-rank").equalsIgnoreCase(playerRank)){
-                sender.sendMessage(messagesFile.getString("error.max-rank")
-                        .replace("%rank%" , playerRank));
-
-                if (senderUser.isConfirmMode()) {
-                    senderUser.setConfirmMode(false);
-                }
-
-                return;
-            }
-
-            if (ranksFile.getConfigurationSection(playerRank) != null){
-                rankExists = true;
-                playerRankName = playerRank.toLowerCase();
-
-            }
-
-            if (ranksFile.getConfigurationSection(playerRank.toUpperCase()) != null ){
-                rankExists = true;
-                playerRankName = playerRank.toUpperCase();
-            }
-        }
-
-        if (!rankExists){
-            sender.sendMessage(messagesFile.getString("error.no-rankup"));
-
-            if (senderUser.isConfirmMode()) {
-                senderUser.setConfirmMode(false);
-            }
-
-            return;
-        }
-
-        int moneyRequirement = ranksFile.getInt(playerRankName + ".money-requirement");
+        String oldRank = senderUser.getPlayerRank();
+        int moneyRequirement = ranksFile.getInt(oldRank + ".money-requirement");
 
         Economy economy = vaultManager.getEconomy();
 
@@ -101,21 +79,24 @@ public class RankupCommand implements CommandClass {
             return;
         }
 
-        String nextRank = ranksFile.getString(playerRankName + ".net-rank");
+        String nextRank = ranksFile.getString(oldRank + ".next-rank");
 
         if (!configFile.getBoolean("settings.add-rank-on-rankup")) {
-            vaultManager.getPermission().playerRemoveGroup(sender, playerRankName);
+            vaultManager.getPermission().playerRemoveGroup(sender, oldRank);
         }
 
-        vaultManager.getPermission().playerAddGroup(sender, nextRank);
-        sender.sendMessage(messagesFile.getString("plugin.rankup-message")
-                .replace("%old-rank%", playerRankName)
-                .replace("%next-rank%", nextRank).toLowerCase());
 
+        vaultManager.getPermission().playerAddGroup(sender, nextRank);
+        playersFile.set(sender.getUniqueId() + ".rank", nextRank);
+        senderUser.setPlayerRank(nextRank);
+
+        sender.sendMessage(messagesFile.getString("plugin.rankup-message")
+                .replace("%old-rank%", oldRank)
+                .replace("%next-rank%", nextRank).toLowerCase());
 
         globalAction
                 .forEach(action -> action.start(sender));
-        ranksAction.get(playerRankName.toLowerCase())
+        ranksAction.get(oldRank)
                 .forEach(action -> action.start(sender));
 
         if (senderUser.isConfirmMode()) {
@@ -124,12 +105,4 @@ public class RankupCommand implements CommandClass {
 
     }
 
-    @Command(names = "reload", permission = "rankup.reload")
-    public void onReloadSubCommand(@Sender Player sender){
-
-        configFile.reload();
-        messagesFile.reload();
-
-        sender.sendMessage(messagesFile.getString("admin.reload"));
-    }
 }

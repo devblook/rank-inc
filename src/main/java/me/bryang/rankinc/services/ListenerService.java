@@ -14,5 +14,6 @@ public class ListenerService implements Service{
     @Override
     public void init() {
         Bukkit.getPluginManager().registerEvents(serverChangeListener, plugin);
+        plugin.getLogger().info("Listeners loaded.");
     }
 }

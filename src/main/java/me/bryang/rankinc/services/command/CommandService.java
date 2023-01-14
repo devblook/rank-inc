@@ -1,6 +1,7 @@
 package me.bryang.rankinc.services.command;
 
 import me.bryang.rankinc.RankInc;
+import me.bryang.rankinc.commands.RanksCommand;
 import me.bryang.rankinc.commands.RankupCommand;
 import me.bryang.rankinc.services.Service;
 import me.fixeddev.commandflow.CommandManager;
@@ -18,6 +19,7 @@ public class CommandService implements Service {
     private RankInc plugin;
 
     private RankupCommand rankupCommand;
+    private RanksCommand ranksCommand;
 
     @Override
     public void init() {
@@ -29,7 +31,9 @@ public class CommandService implements Service {
         partInjector.install(new BukkitModule());
 
         AnnotatedCommandTreeBuilder builder = new AnnotatedCommandTreeBuilderImpl(partInjector);
+
         commandManager.registerCommands(builder.fromClass(rankupCommand));
+        commandManager.registerCommands(builder.fromClass(ranksCommand));
 
         plugin.getLogger().info("Commands loaded!");
     }
