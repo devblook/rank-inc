@@ -27,3 +27,4 @@ replay_pid*
 *.bin
 *.lock
 *.xml
+*.iml
