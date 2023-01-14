@@ -46,7 +46,7 @@ public class MainModule extends AbstractModule {
                 .singleton();
         bind(RanksCommand.class)
                 .singleton();
-
+    
         bind(ServerChangeListener.class)
                 .singleton();
 
