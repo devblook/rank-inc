@@ -12,7 +12,7 @@ plugin:
 
   # Rank format.
   ranks:
-    title: "&a[*] &8| List of ranks."
+    title: "&a[*] &8| &fList of ranks."
 
     format: "&a%old-rank% &8-> &a%next-rank% &8: &f%money-requirement%"
 
