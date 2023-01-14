@@ -34,7 +34,6 @@ public class ServerChangeListener implements Listener{
     public void onJoin(PlayerJoinEvent event) {
         userMap.put(event.getPlayer().getUniqueId().toString(), new User());
 
-        System.out.println(Arrays.toString(ranksFile.getKeys(false).toArray()));
         String playerUniqueId = event.getPlayer().getUniqueId().toString();
 
         String firstRank = new ArrayList<>(ranksFile.getKeys(false)).get(1);
