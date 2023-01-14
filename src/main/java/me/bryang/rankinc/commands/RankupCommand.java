@@ -12,7 +12,10 @@ import org.bukkit.entity.Player;
 import team.unnamed.inject.InjectAll;
 
 import javax.inject.Named;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 @InjectAll
 @Command(names = "rankup")
@@ -67,9 +70,7 @@ public class RankupCommand implements CommandClass {
         }
 
         String oldRank = senderUser.getPlayerRank();
-
         int moneyRequirement = ranksFile.getInt(oldRank + ".money-requirement");
-
         Economy economy = vaultManager.getEconomy();
 
         if (!economy.has(sender, moneyRequirement)){

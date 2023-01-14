@@ -30,12 +30,10 @@ public class RanksCommand implements CommandClass {
         Set<String> ranksKeys = ranksFile.getKeys(false);
         ranksKeys.remove("last-rank");
 
-        ranksKeys.forEach(key -> {
+        ranksKeys.forEach(oldRank -> {
 
-            String oldRank = key;
-
-            String nextRank = ranksFile.getString(key + ".next-rank");
-            int moneyRequirement = ranksFile.getInt(key + ".money-requirement");
+            String nextRank = ranksFile.getString(oldRank + ".next-rank");
+            int moneyRequirement = ranksFile.getInt(oldRank + ".money-requirement");
 
             sender.sendMessage(messagesFile.getString("plugin.ranks.format")
                     .replace("%old-rank%", oldRank)
