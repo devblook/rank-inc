@@ -10,6 +10,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import team.unnamed.inject.InjectAll;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.*;
 
 @InjectAll
@@ -18,8 +19,11 @@ public class ServerChangeListener implements Listener{
     private Map<String, User> userMap;
 
     private FileManager configFile;
+
+    @Named("ranks")
     private FileManager ranksFile;
 
+    @Named("players")
     private FileManager playersFile;
 
     private VaultManager vaultManager;
