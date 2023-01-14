@@ -42,7 +42,7 @@ public class RankupCommand implements CommandClass {
 
         User senderUser = userMap.get(sender.getUniqueId().toString());
 
-        List<String> playerRankList = List.of(vaultManager.getPermission().getPlayerGroups(sender));
+        List<String> playerRankList = new ArrayList<>(Arrays.asList(vaultManager.getPermission().getPlayerGroups(sender)));
 
         if (playerRankList.contains(senderUser.getPlayerRank())){
             sender.sendMessage(messagesFile.getString("error.no-rankup"));
@@ -51,7 +51,7 @@ public class RankupCommand implements CommandClass {
 
         if (ranksFile.getString("last-rank").equalsIgnoreCase(senderUser.getPlayerRank())){
             sender.sendMessage(messagesFile.getString("error.max-rank")
-                    .replace("%rank%" , senderUser.getPlayerRank()));
+                    .replace("%group%" , senderUser.getPlayerRank()));
 
             return;
         }
@@ -66,15 +66,15 @@ public class RankupCommand implements CommandClass {
             }
         }
 
-
         String oldRank = senderUser.getPlayerRank();
+
         int moneyRequirement = ranksFile.getInt(oldRank + ".money-requirement");
 
         Economy economy = vaultManager.getEconomy();
 
-        if (economy.has(sender, moneyRequirement)){
+        if (!economy.has(sender, moneyRequirement)){
             sender.sendMessage(messagesFile.getString("error.insufficient-money")
-                    .replace("%money%", String.valueOf(economy.getBalance(sender))));
+                    .replace("%money%", String.valueOf(moneyRequirement)));
 
             return;
         }
