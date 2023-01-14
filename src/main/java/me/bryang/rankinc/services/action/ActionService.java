@@ -43,21 +43,16 @@ public class ActionService implements Service {
         ranksKeys.forEach(rankKey -> {
 
             List<Action> actionList = new ArrayList<>();
+            for (String line : ranksFile.getStringList(rankKey + ".actions")){
 
-            ranksFile.getStringList(rankKey + ".actions")
-                    .forEach(line -> {
+                if (line.isEmpty()) {
+                    continue;
+                }
 
-                        if (line.isEmpty()){
-                            return;
-                        }
+                actionList.add(convertToAction(line));
+            }
 
-                        actionList.add(convertToAction(line));
-
-
-                    });
-
-            ranksAction.put(rankKey.toLowerCase(), actionList);
-
+            ranksAction.put(rankKey, actionList);
         });
 
     }
