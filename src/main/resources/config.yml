@@ -11,7 +11,7 @@ settings:
 
   # If you enable this, when the player rankup will add the rank.
   # If you disable will remove the old rank and put the new rank.
-  add-rank-on-rankup: true
+  add-rank-on-rankup: false
 
   # Note: Use %a to use the ":" %symbol%
   global-actions:
