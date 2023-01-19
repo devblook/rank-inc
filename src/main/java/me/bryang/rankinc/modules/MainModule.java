@@ -32,16 +32,23 @@ public class MainModule extends AbstractModule {
 
         install(new FileModule(plugin));
 
-        bind(new TypeReference<Map<String, User>>(){})
+        bind(new TypeReference<Map<String, User>>() {
+        })
                 .toInstance(new HashMap<>());
 
-        bind(new TypeReference<List<Action>>(){})
+        bind(new TypeReference<List<Action>>() {
+        })
                 .toInstance(new ArrayList<>());
-        bind(new TypeReference<Map<String, List<Action>>>(){})
+        bind(new TypeReference<Map<String, List<Action>>>() {
+        })
                 .toInstance(new HashMap<>());
 
-        bind(new TypeReference<Map<ActionType, Action>>(){})
+        bind(new TypeReference<Map<ActionType, Action>>() {
+        })
                 .toInstance(new HashMap<>());
+
+        bind(RankupAction.class)
+                .toInstance(new RankupAction());
 
         bind(RankupCommand.class)
                 .singleton();
@@ -54,8 +61,6 @@ public class MainModule extends AbstractModule {
         bind(VaultManager.class)
                 .toInstance(new VaultManager(plugin));
 
-        bind(RankupAction.class)
-                .toInstance(new RankupAction());
 
         install(new ServiceModule());
 
