@@ -1,9 +1,9 @@
 package me.bryang.rankinc.services.action;
 
 import me.bryang.rankinc.actions.Action;
-import me.bryang.rankinc.actions.ConsolePerformCommandAction;
-import me.bryang.rankinc.actions.PerformCommandAction;
-import me.bryang.rankinc.actions.SendMessageAction;
+import me.bryang.rankinc.actions.player.ConsolePerformCommandAction;
+import me.bryang.rankinc.actions.player.PerformCommandAction;
+import me.bryang.rankinc.actions.player.SendMessageAction;
 import me.bryang.rankinc.manager.FileManager;
 import me.bryang.rankinc.services.Service;
 import team.unnamed.inject.InjectAll;

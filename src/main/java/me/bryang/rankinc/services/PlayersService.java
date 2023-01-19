@@ -22,8 +22,9 @@ public class PlayersService implements Service {
                 getKeys(false)
                 .forEach(keys -> {
 
+                    userMap.put(keys, new User());
                     userMap.get(keys)
-                            .setPlayerRank(playersFile.getString(keys + ".ranks"));
+                            .setPlayerRank(playersFile.getString(keys + ".rank"));
 
                 });
     }

@@ -32,15 +32,17 @@ public class ServerChangeListener implements Listener{
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
-        userMap.put(event.getPlayer().getUniqueId().toString(), new User());
 
         String playerUniqueId = event.getPlayer().getUniqueId().toString();
+
+        userMap.put(playerUniqueId, new User());
 
         String firstRank = new ArrayList<>(ranksFile.getKeys(false)).get(1);
 
         userMap.get(playerUniqueId)
                 .setPlayerRank(firstRank);
         playersFile.set(playerUniqueId + ".rank", firstRank);
+        playersFile.save();
 
         if (configFile.getBoolean("settings.give-rank-on-join")) {
             vaultManager.getPermission().playerAddGroup(event.getPlayer(), firstRank);

@@ -41,7 +41,7 @@ public class RanksCommand implements CommandClass {
                     .replace("%money-requirement%", String.valueOf(moneyRequirement)));
         });
     }
-    @Command(names = "reload", permission = "rankup.reload")
+    @Command(names = "reload", permission = "rank-inc.reload")
     public void onReloadSubCommand(@Sender Player sender){
 
         configFile.reload();

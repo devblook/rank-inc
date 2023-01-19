@@ -1,5 +1,6 @@
-package me.bryang.rankinc.actions;
+package me.bryang.rankinc.actions.player;
 
+import me.bryang.rankinc.actions.Action;
 import org.bukkit.entity.Player;
 
 public class SendMessageAction extends Action {

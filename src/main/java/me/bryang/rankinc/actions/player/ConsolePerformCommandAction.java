@@ -1,9 +1,10 @@
-package me.bryang.rankinc.actions;
+package me.bryang.rankinc.actions.player;
 
+import me.bryang.rankinc.actions.Action;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-public class ConsolePerformCommandAction extends Action{
+public class ConsolePerformCommandAction extends Action {
 
     private final String messageData = "";
 
