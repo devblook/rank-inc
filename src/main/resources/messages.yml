@@ -16,11 +16,20 @@ plugin:
 
     format: "&a%old-rank% &8-> &a%next-rank% &8: &f%money-requirement%"
 
+  # Help format:
+  help-format:
+    - "&aCommand help:"
+    - "&8- &f/rankinc help &8: &fHelp command."
+    - "&8- &f/rankinc reload &8: &fTo reload the plugin."
+    - "&8- &f/rankinc set [player] [rank] &8: &fTo set a rank to a player."
 
 admin:
 
   # When you reload the plugin.
   reload: "&e[!] &fPlugin reloaded."
+
+  #When you set a rank to a player.
+  set: "&e[!] &fYou set &a%player% &fto rank &a%rank%&f."
 
 error:
 
@@ -30,6 +39,9 @@ error:
   # When you don't have permission to use the command.
   no-permission: "&c[Error] &8| &fYou don't have permission to do this."
 
+  # When the player that you type doesn't exists.
+  no-online: "&c[Error] &8| &fThe player doesn't exists."
+
   # When you don´t have the group in the list of rankups.
   no-rankup: "&c[Error] &8| &fYou don't have a rank in the &crankup list&f."
 
@@ -38,3 +50,6 @@ error:
 
   # When you don't have the required money.
   insufficient-money: "&c[Error] &8| &fInsufficient money. &fYou need &a$%money%&f."
+
+  # When you type a rank that doesn't exists.
+  rank-no-exists: "&c[Error] &8| &fThe rank &c%rank% &fdoesn't exists."

@@ -4,10 +4,8 @@ import me.bryang.rankinc.actions.Action;
 import me.bryang.rankinc.manager.FileManager;
 import me.bryang.rankinc.manager.VaultManager;
 import me.bryang.rankinc.user.User;
-import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import team.unnamed.inject.InjectAll;
 
 import javax.inject.Inject;
 import javax.inject.Named;

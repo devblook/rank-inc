@@ -15,13 +15,13 @@ import java.util.Set;
 public class RanksCommand implements CommandClass {
 
 
-    private FileManager configFile;
-
     @Named("messages")
     private FileManager messagesFile;
 
     @Named("ranks")
     private FileManager ranksFile;
+
+
 
     @Command(names = "")
     public void onMainSubCommand(@Sender Player sender) {
@@ -41,14 +41,4 @@ public class RanksCommand implements CommandClass {
                     .replace("%money-requirement%", String.valueOf(moneyRequirement)));
         });
     }
-    @Command(names = "reload", permission = "rank-inc.reload")
-    public void onReloadSubCommand(@Sender Player sender){
-
-        configFile.reload();
-        messagesFile.reload();
-        ranksFile.reload();
-
-        sender.sendMessage(messagesFile.getString("admin.reload"));
-    }
-
 }

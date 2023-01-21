@@ -1,6 +1,5 @@
 package me.bryang.rankinc.commands;
 
-import me.bryang.rankinc.actions.Action;
 import me.bryang.rankinc.actions.plugin.RankupAction;
 import me.bryang.rankinc.manager.FileManager;
 import me.bryang.rankinc.manager.VaultManager;
@@ -13,7 +12,8 @@ import org.bukkit.entity.Player;
 import team.unnamed.inject.InjectAll;
 
 import javax.inject.Named;
-import java.util.*;
+import java.util.Map;
+import java.util.Set;
 
 @InjectAll
 @Command(names = "rankup")
@@ -38,17 +38,18 @@ public class RankupCommand implements CommandClass {
 
         User senderUser = userMap.get(sender.getUniqueId().toString());
 
-        if (!ranksFile.isConfigurationSection(senderUser.getPlayerRank())){
-            sender.sendMessage(messagesFile.getString("error.no-rankup"));
-            return;
-        }
-
         if (ranksFile.getString("last-rank").equalsIgnoreCase(senderUser.getPlayerRank())){
             sender.sendMessage(messagesFile.getString("error.max-rank")
                     .replace("%group%" , senderUser.getPlayerRank()));
 
             return;
         }
+
+        if (!ranksFile.isConfigurationSection(senderUser.getPlayerRank())){
+            sender.sendMessage(messagesFile.getString("error.no-rankup"));
+            return;
+        }
+
 
         if (configFile.getBoolean("settings.allow-confirm")){
 
@@ -87,6 +88,12 @@ public class RankupCommand implements CommandClass {
 
             return;
         }
+
+        if (!ranksFile.isConfigurationSection(senderUser.getPlayerRank())){
+            sender.sendMessage(messagesFile.getString("error.no-rankup"));
+            return;
+        }
+
         Set<String> ranksKeys = ranksFile.getKeys(false);
         ranksKeys.remove("last-rank");
 

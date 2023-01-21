@@ -1,6 +1,7 @@
 package me.bryang.rankinc.services.command;
 
 import me.bryang.rankinc.RankInc;
+import me.bryang.rankinc.commands.RankIncCommand;
 import me.bryang.rankinc.commands.RanksCommand;
 import me.bryang.rankinc.commands.RankupCommand;
 import me.bryang.rankinc.services.Service;
@@ -20,6 +21,7 @@ public class CommandService implements Service {
 
     private RankupCommand rankupCommand;
     private RanksCommand ranksCommand;
+    private RankIncCommand rankIncCommand;
 
     @Override
     public void init() {
@@ -34,6 +36,7 @@ public class CommandService implements Service {
 
         commandManager.registerCommands(builder.fromClass(rankupCommand));
         commandManager.registerCommands(builder.fromClass(ranksCommand));
+        commandManager.registerCommands(builder.fromClass(rankIncCommand));
 
         plugin.getLogger().info("Commands loaded!");
     }

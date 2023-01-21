@@ -47,12 +47,13 @@ public class MainModule extends AbstractModule {
         })
                 .toInstance(new HashMap<>());
 
-        bind(RankupAction.class)
-                .toInstance(new RankupAction());
+        bind(RankupAction.class).singleton();
 
         bind(RankupCommand.class)
                 .singleton();
         bind(RanksCommand.class)
+                .singleton();
+        bind(RankInc.class)
                 .singleton();
 
         bind(ServerChangeListener.class)

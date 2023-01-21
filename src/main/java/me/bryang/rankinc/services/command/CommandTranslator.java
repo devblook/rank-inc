@@ -21,9 +21,10 @@ public class CommandTranslator implements TranslationProvider {
 
             case "command.no-permission":
                 return messagesFile.getString("error.no-permission");
-
+            case "player.offline":
+                return messagesFile.getString("error.no-online");
         }
-        return "Si ves este mensaje, contacta con el programador.";
+        return "Err: If you see this, contact with the developer.";
     }
 
 }
